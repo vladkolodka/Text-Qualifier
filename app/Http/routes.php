@@ -12,3 +12,18 @@
 */
 
 Route::get('/', ['uses' => 'MainController@index', 'as' => 'home']);
+
+Route::get('lang/{lang?}', ['as' => 'setLang', function ($lang = 'en', Request $request) {
+    if (!in_array($lang, config('app.locales'))) {
+        return view('error')->with([
+            'page_name' => "Error",
+            'error_info' => [
+                'name' => 'Ошибка при смене языка',
+                'desc' => 'Такого языка не существует!'
+            ]
+        ]);
+    }
+
+    app()->setLocale($lang);
+    return redirect()->back();
+}])->where('lang', '[a-z]+');

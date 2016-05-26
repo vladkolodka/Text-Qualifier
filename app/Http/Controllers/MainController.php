@@ -8,6 +8,7 @@ use Qualifier\Http\Models;
 class MainController extends Controller {
     public function index(Request $request){
 
+        return view('welcome');
 //        \DB::table('topics')->truncate();
 //        \DB::table('documents')->truncate();
 //        \DB::table('words')->truncate();

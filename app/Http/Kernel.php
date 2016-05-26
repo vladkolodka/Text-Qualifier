@@ -15,8 +15,8 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        Middleware\LanguageCookieCheck::class
     ];
-
     /**
      * The application's route middleware groups.
      *
@@ -28,7 +28,7 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \Qualifier\Http\Middleware\VerifyCsrfToken::class,
+            \Qualifier\Http\Middleware\VerifyCsrfToken::class
         ],
 
         'api' => [

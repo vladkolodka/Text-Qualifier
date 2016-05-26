@@ -51,7 +51,8 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
-
+    
+    'domain' => str_replace(['http://', 'www.'], '',  env('APP_URL')),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -78,6 +79,7 @@ return [
 
     'locale' => 'en',
 
+    'locales' => ['en', 'ua', 'ru'],
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
