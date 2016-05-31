@@ -169,6 +169,11 @@ return [
         Qualifier\Providers\EventServiceProvider::class,
         Qualifier\Providers\RouteServiceProvider::class,
 
+        /*
+         * My Service Providers...
+         */
+        vladkolodka\phpMorphy\MorphyServiceProvider::class
+
     ],
 
     /*
@@ -215,6 +220,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Morphy' => vladkolodka\phpMorphy\Facade\Morphy::class
     ],
 
 ];
