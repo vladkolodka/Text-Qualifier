@@ -11,13 +11,14 @@ class Document extends Model {
         return $this->belongsTo(Topic::class);
     }
     public function words(){
-        return $this->belongsToMany(Word::class);
+        return $this->belongsToMany(Word::class)->withPivot('tf');
     }
     public function scopeVerified($query){
         return $query->where('verified', true);
     }
     public function delete() {
-        $this->words()->delete();
+        // TODO утилита удаления не используемых слов
+//        $this->words()->delete();
         $this->words()->detach();
         return parent::delete();
     }

@@ -4,6 +4,9 @@ namespace Qualifier\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string name
+ */
 class Language extends Model {
     public $timestamps = false;
 
@@ -16,5 +19,8 @@ class Language extends Model {
 
     public function scopeOfLang($query, $lang_name){
         return $query->where('name', $lang_name)->first();
+    }
+    public function stopWords(){
+        return $this->hasMany(StopWord::class);
     }
 }
