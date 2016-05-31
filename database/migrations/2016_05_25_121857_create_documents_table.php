@@ -17,7 +17,7 @@ class CreateDocumentsTable extends Migration {
             $table->timestamps();
 
             $table->string('name');
-            $table->text('text');
+            $table->longText('text');
             $table->boolean('verified')->default(false);
             $table->integer('topic_id')->default(0)->unsigned();
 

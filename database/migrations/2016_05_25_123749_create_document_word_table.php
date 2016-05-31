@@ -13,9 +13,11 @@ class CreateDocumentWordTable extends Migration {
         Schema::create('document_word', function (Blueprint $table) {
             $table->engine = 'MyISAM';
 
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('document_id')->unsigned();
             $table->integer('word_id')->unsigned();
+
+            $table->double('tf', 15, 8)->unsigned();
 
             $table->foreign('document_id')->references('id')->on('documents')->onDelete('cascade');
             $table->foreign('word_id')->references('id')->on('words')->onDelete('cascade');

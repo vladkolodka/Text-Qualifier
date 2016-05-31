@@ -3,18 +3,21 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWordsTable extends Migration {
+class CreateTableStopWords extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('words', function (Blueprint $table) {
+        Schema::create('stop_words', function (Blueprint $table) {
             $table->engine = 'MyISAM';
 
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name')->unique();
+            $table->integer('language_id')->unsigned();
+
+            $table->foreign('language_id')->references('id')->on('languages')->onDelete('SET NULL');
         });
     }
 
@@ -24,6 +27,6 @@ class CreateWordsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::drop('words');
+        Schema::drop('stop_words');
     }
 }
