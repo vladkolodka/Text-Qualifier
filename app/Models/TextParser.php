@@ -1,6 +1,7 @@
 <?php
 namespace Qualifier\Models;
 
+use Qualifier\Exceptions\JsonException;
 use Smalot\PdfParser\Parser as PdfParser;
 use WordDocParser\doc as DocParser;
 
@@ -8,6 +9,7 @@ class TextParser{
     private $text = '';
 
     public function __construct($file_path, $extension) {
+        // parse document
         switch ($extension) {
             case 'doc':
                 $this->parseDoc($file_path);
@@ -25,14 +27,14 @@ class TextParser{
                 $this->parsePdf($file_path);
                 break;
             default:
-                // TODO FileFormatException
+                throw new JsonException('bad_format');
                 break;
         }
 
         $this->text = trim(strip_tags(mb_convert_encoding($this->text, "UTF-8")), "'+=-+,._\r\n ");
         $this->text = preg_replace(['/(\r\n|\n)/u', '/ {2,}/u'], ' ', $this->text);
 
-        // TODO if text isset
+        if(empty($this->text)) throw new JsonException('empty_document');
     }
 
     private function parseDoc($file_path){
@@ -66,14 +68,10 @@ class TextParser{
                 $xml->preserveWhiteSpace = false;
                 $xml->formatOutput = true;
 
-                // После этого подгружаем все entity и по возможности include'ы других файлов
-                // Проглатываем ошибки и предупреждения
-                // После чего возвращаем данные без XML-тегов форматирования
                 return strip_tags($xml->saveXML());
             }
             $zip->close();
         }
-        // Если что-то пошло не так, возвращаем пустую строку
         return "";
     }
 
@@ -86,7 +84,6 @@ class TextParser{
 
         $this->text = $pdf_file->getText();
     }
-
 
     /**
      * @return string

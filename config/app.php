@@ -80,6 +80,9 @@ return [
     'locale' => 'en',
 
     'locales' => ['en', 'ua', 'ru'],
+
+    'file_formats' => ['txt', 'doc', 'docx', 'odt', 'pdf'],
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale

@@ -4,37 +4,28 @@ namespace Qualifier\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Qualifier\Http\Models;
+use Qualifier\Http\Requests\UploadRequest;
+use Qualifier\Models\TextProcessor;
 
 class MainController extends Controller {
     public function index(Request $request){
-
         return view('welcome');
-//        \DB::table('topics')->truncate();
-//        \DB::table('documents')->truncate();
-//        \DB::table('words')->truncate();
-//        \DB::table('document_word')->truncate();
-
-//        Models\Language::ofLang('en')->topics()->save(
-//            Models\Topic::create(['name' => 'Topic 1'])
-//        );
-
-//        Models\Document::create(['name' => 'Hello, world!', 'text' => 'One day far away...']);
-
-//        Models\Document::first()->delete();
-//        Models\Topic::first()->delete();
-
-
-//        dd(Models\Document::first()->id);
-
-//        Models\Document::first()->words()->saveMany([
-//            new Models\Word(['name' => 'One']),
-//            new Models\Word(['name' => 'day']),
-//            new Models\Word(['name' => 'far']),
-//            new Models\Word(['name' => 'away']),
-//        ]);
-
-//        dd(Models\Topic::first()->words());
-
-//        dd(Models\Topic::all()->documents()->get());
     }
+    public function setLanguage($lang = 'en', Request $request){
+        if(!in_array($lang, config('app.locales'))) abort(404);
+
+        app()->setLocale($lang);
+        if($request->url() == \URL::previous()) return redirect()->route('home');
+        return redirect()->back();
+    }
+    public function uploadFile(UploadRequest $request){
+
+        if(!$request->ajax()) abort(403);
+        $qualifier = new TextProcessor($request->file('file'), $request->input('language'));
+        $topics = [];
+        foreach ($qualifier->getTopics() as $topic) $topics[] = $topic->name;
+
+        return response()->json(['topics' => $topics]);
+    }
+
 }

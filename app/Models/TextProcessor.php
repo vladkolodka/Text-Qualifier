@@ -7,27 +7,50 @@ use vladkolodka\linearAlgebra\SingularValueDecomposition;
 
 class TextProcessor{
     private $topics = null;
-    
+
+    /**
+     * TextProcessor constructor.
+     * @param UploadedFile $file File from request
+     * @param $text_language string language_name
+     */
     public function __construct(UploadedFile $file, $text_language) {
 
-        // TODO words count limit
-
+        // get language
         $language = Models\Language::OfLang($text_language);
-        
-        $parser = new TextParser($file->getPathname(), $file->getExtension());
-        $normalizer = new TextNormalizer($parser->getText(), $text_language);
-        $matrixBuilder = new \Qualifier\Models\DocumentWordMatrixCreator($normalizer->getWords(), $language);
-        
+
+        // parse text
+        $parser = new TextParser($file->getPathname(), $file->getClientOriginalExtension());
+
+//        dd($parser->getText());
+
+        $existing_document = Models\Document::where('hash', 'fff')->first();
+        // if document exists in database, return its topic
+        if($existing_document){
+            $this->topics = [$existing_document->topic()->get()];
+            return;
+        }
+//        Models\Document::where('hash', md5($parser->getText()))->first();
+
+        // get text words
+        $normalizer = new TextNormalizer($parser->getText(), $language);
+
+        // build matrix for SVD
+        $matrixBuilder = new DocumentWordMatrixCreator($normalizer->getWords(), $language);
+
+        // singular value decomposition
         $svd = new SingularValueDecomposition($matrixBuilder->getMatrix());
 
         $matrix = $svd->getV();
-//
+
+        // categorize text
         $qualifier = new TextCategorization($matrix);
 
+        // get topics by document ids
         $this->topics = Models\Topic::find($matrixBuilder->getTopicsByDocumentIndex($qualifier->getResults()));
     }
 
     /**
+     * Creates new document in database
      * @param $words array
      * @param $topic Models\Topic
      */

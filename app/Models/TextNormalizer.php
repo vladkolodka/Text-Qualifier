@@ -1,6 +1,7 @@
 <?php
 namespace Qualifier\Models;
 
+use Qualifier\Exceptions\JsonException;
 use Qualifier\Http\Models\Language;
 use vladkolodka\phpMorphy\Morphy;
 
@@ -13,6 +14,7 @@ class TextNormalizer {
      * TextNormalizer constructor.
      * @param $text string
      * @param $language Language
+     * @throws JsonException
      */
     public function __construct($text, $language) {
         $this->morphy = new Morphy($language->name);
@@ -48,7 +50,9 @@ class TextNormalizer {
             }
         }
         $words_count = count($new_words);
-        // TODO validate words count
+
+        if(!$words_count) throw new JsonException('words_not_enough');
+        
         foreach ($new_words as $word => $count) $this->words[$word] = $count / $words_count;
     }
 

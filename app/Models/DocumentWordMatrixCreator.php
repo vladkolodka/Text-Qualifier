@@ -1,6 +1,7 @@
 <?php
 namespace Qualifier\Models;
 
+use Qualifier\Exceptions\JsonException;
 use Qualifier\Http\Models\Language;
 use vladkolodka\linearAlgebra\Matrix;
 
@@ -14,6 +15,7 @@ class DocumentWordMatrixCreator {
      * DocumentWordMatrixCreator constructor.
      * @param $new_document_words array
      * @param $language Language
+     * @throws JsonException
      */
     public function __construct($new_document_words, $language) {
         // load documents and their words from database
@@ -22,7 +24,8 @@ class DocumentWordMatrixCreator {
         /** @noinspection PhpUndefinedMethodInspection */
         $this->documents_count = $this->documents->count() + 1;
 
-        // TODO if no documents in database
+        if($this->documents_count == 1) throw new JsonException('empty_database_documents');
+
 
         // select words that are found in several documents
         foreach ($this->documents as $document)

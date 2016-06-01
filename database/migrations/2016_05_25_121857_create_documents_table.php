@@ -20,6 +20,7 @@ class CreateDocumentsTable extends Migration {
             $table->longText('text');
             $table->boolean('verified')->default(false);
             $table->integer('topic_id')->default(0)->unsigned();
+            $table->string('hash', 32)->nullable()->unique();
 
             $table->foreign('topic_id')->references('id')->on('topics')->onDelete('set default');
         });
