@@ -1,16 +1,12 @@
 body {
     height: 100%;
+    background-color: #263238;
 
 }
 #content h1{
     color: white;
     text-shadow: 1px 1px 50px black;
     font-weight: bolder;
-}
-nav.header * {
-}
-
-nav.header .brand-logo {
 }
 
 nav.header ul a:hover {
@@ -46,7 +42,7 @@ div.space {
 .content * {
     color: white;
 }
-.content p{
+.content p.text{
     padding: 10px;
     border-left: 7px solid #020304;
     border-right: 7px solid #020304;
@@ -64,4 +60,19 @@ div.space {
 }
 .language-selector .select-dropdown{
     margin-bottom: 0 !important;
+}
+.main .text_language{
+    margin-top: 10px;
+}
+.file_upload div{
+    width: auto !important;
+}
+footer.footer{
+    margin-top: 0;
+}
+.results_form, .result_buttons_wrapper, .results{
+    display: none;
+}
+.error_toast{
+    color: #ff1744;
 }

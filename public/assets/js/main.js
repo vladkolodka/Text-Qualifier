@@ -1,21 +1,20 @@
-$(function (){
-    $('#content').height($(window).height() - $('#header').height());
+var locale = null;
 
-    $('#upload').click(function (){
-        $('#content_card').children().fadeOut();
-    });
-
-    var language_wrapper = $('.language-selector');
+$(function () {
     var language_selector = $('#language');
+    var selector = language_selector.get(0);
     var lang_url = language_selector.attr('data-src');
+    var selected_lang = selector.selectedIndex;
 
     language_selector.material_select();
-    language_selector.change(function (){
-        var lang_name = language_wrapper.find(".active>span").text();
-        var lang = language_selector.find('option:contains("' + lang_name + '")').val();
-        window.location.href = lang_url + '/' + lang;
+    language_selector.change(function () {
+        if(selected_lang != selector.selectedIndex){
+            window.location.href = lang_url + '/' + selector.options[selector.selectedIndex].getAttribute('value');
+            selected_lang = selector.selectedIndex;
+        }
     });
-});
-$(window).resize(function (){
-    $('#content').height($(window).height() - $('#header').height());
+
+    locale = jQuery.parseJSON($('#locale_data').text());
+
+    if(typeof start == 'function') start();
 });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ App::getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <title>
@@ -9,17 +9,25 @@
         @endif
     </title>
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="stylesheet" href="{{ load('css/materialize.css') }}">
     <link rel="stylesheet" href="{{ load('css/main.css') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="shortcut icon" href="{{ load('img/favicon.png') }}" type="image/png">
 
-    <script src="{{ load('js/jquery.js') }}"></script>
-    <script src={{ load('js/materialize.js') }}></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src={{ load('js/vendor/materialize.js') }}></script>
+
+    @yield('includes')
 
     <script src="{{ load('js/main.js') }}"></script>
 </head>
 <body>
+<!-- Translation data -->
+<div style="display: none;" id="locale_data">
+    {{ json_encode(trans('js')) }}
+</div>
 <nav class="header" id="header">
     <div class="nav-wrapper blue-grey darken-4">
         <a href="{{ route('home') }}" class="brand-logo">
@@ -45,5 +53,14 @@
     </div>
 </nav>
 @yield('content')
+<footer class="page-footer blue-grey darken-3 footer">
+    <div class="footer-copyright blue-grey darken-4">
+        <div class="container">
+            © {{ date("Y") }} Text Qualifier. {{ trans('main.copyright') }} <a href="https://github.com/vladkolodka" target="_blank">Vladyslav Kolodka</a>.
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+    </div>
+
+</footer>
 </body>
 </html>
