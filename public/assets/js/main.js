@@ -30,6 +30,8 @@ function FileUploader(fileInput, submitButton, onBeforeStart, onProgress,
 
     var that = this;
     submitButton.click(function (event){
+        event.preventDefault();
+
         // file not selected
         if(!that.file.files.length){
             onValidateError(0);

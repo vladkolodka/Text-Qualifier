@@ -16,7 +16,7 @@
                 <div class="file-field input-field">
                     <div class="btn">
                         <span>{{ trans('main.select_file_button') }}</span>
-                        <input type="file" id="file_field" data-url="{{ route('upload') }}"/>
+                        <input type="file" id="file_field" name="file" data-url="{{ route('upload') }}"/>
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text"
