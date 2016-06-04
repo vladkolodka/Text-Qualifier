@@ -7,5 +7,6 @@ return [
     'analysing' => 'Analysing...',
     'upload_done' => 'Done',
     'error' => 'Error',
-    'bad_format' => 'Unsupported file format.'
+    'bad_format' => 'Unsupported file format.',
+    'big_file_size' => 'Big file size!'
 ];
