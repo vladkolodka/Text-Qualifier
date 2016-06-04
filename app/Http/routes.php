@@ -1,29 +1,22 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+Route::singularResourceParameters();
 
-Route::get('/', ['uses' => 'MainController@index', 'as' => 'home']);
+Route::group(['domain' => config('app.domain')], function () {
 
-Route::get('lang/{lang?}', ['as' => 'setLang', function ($lang = 'en', Request $request) {
-    if (!in_array($lang, config('app.locales'))) {
-        return view('error')->with([
-            'page_name' => "Error",
-            'error_info' => [
-                'name' => 'Ошибка при смене языка',
-                'desc' => 'Такого языка не существует!'
-            ]
-        ]);
-    }
+    Route::get('test', 'TestController@getTopics');
 
-    app()->setLocale($lang);
-    return redirect()->back();
-}])->where('lang', '[a-z]+');
+    Route::get('/', ['uses' => 'MainController@index', 'as' => 'home']);
+
+    Route::post('upload', ['uses' => 'MainController@uploadFile', 'as' => 'upload']);
+
+    Route::get('language/{lang?}', ['uses' => 'MainController@setLanguage', 'as' => 'setLang'])->where('lang', '[a-z]{2,}');
+
+});
+
+Route::group(['domain' => 'admin.' . config('app.domain'), 'as' => 'admin::'], function () {
+    Route::get('/', ['uses' => 'AdminController@index', 'as' => 'home']);
+
+    Route::resource('topics', 'Admin\TopicController');
+    Route::resource('documents', 'Admin\DocumentController');
+});

@@ -1,0 +1,16 @@
+.space, .brand-logo img{
+    float: left;
+}
+.space{
+    margin-left: 6px !important;
+}
+.brand-logo span{
+    text-decoration: underline;
+}
+.page-content h2{
+    margin-top: 0;
+    border-bottom: 1px solid black;
+}
+.select-h-60 input[type=text]{
+    height: 60px;
+}

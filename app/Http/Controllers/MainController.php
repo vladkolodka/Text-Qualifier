@@ -8,9 +8,10 @@ use Qualifier\Http\Requests\UploadRequest;
 use Qualifier\Models\TextProcessor;
 
 class MainController extends Controller {
-    public function index(Request $request){
+    public function index(){
         return view('welcome');
     }
+
     public function setLanguage($lang = 'en', Request $request){
         if(!in_array($lang, config('app.locales'))) abort(404);
 
@@ -18,12 +19,12 @@ class MainController extends Controller {
         if($request->url() == \URL::previous()) return redirect()->route('home');
         return redirect()->back();
     }
-    public function uploadFile(UploadRequest $request){
 
+    public function uploadFile(UploadRequest $request){
         if(!$request->ajax()) abort(403);
         $qualifier = new TextProcessor($request->file('file'), $request->input('language'));
         $topics = [];
-        foreach ($qualifier->getTopics() as $topic) $topics[] = $topic->name;
+        foreach ($qualifier->analyze($request->input('save')) as $topic) $topics[] = $topic->name;
 
         return response()->json(['topics' => $topics]);
     }
