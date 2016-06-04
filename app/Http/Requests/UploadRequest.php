@@ -21,7 +21,6 @@ class UploadRequest extends Request {
      */
     public function rules() {
         return [
-//            'file' => 'required|max:10240|mimes:' . implode(',', config('app.file_formats')),
             'language' => 'required|in:en,ru',
             'save' => 'required|in:0,1'
         ];
