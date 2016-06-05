@@ -19,9 +19,22 @@ class DocumentController extends Controller {
     public function index() {
 
         return view('admin.documents')->with([
-            'documents' => Document::paginate(15),
+            'documents' => Document::verified()->paginate(15),
             'page_title' => trans('admin.documents')
         ]);
+    }
+    public function indexUnverified(){
+        return view('admin.documentsUnverified')->with([
+            'documents' => Document::UnVerified()->paginate(15),
+            'page_title' => trans('admin.documents')
+        ]);
+    }
+
+    public function verify(Request $request, $document_id){
+//        dd(Document::where('id', $document_id)->get());
+
+        Document::where('id', $document_id)->update(['verified' => true]);
+        return redirect()->back();
     }
 
     /**

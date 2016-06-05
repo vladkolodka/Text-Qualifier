@@ -16,6 +16,9 @@ class Document extends Model {
     public function scopeVerified($query){
         return $query->where('verified', true);
     }
+    public function scopeUnverified($query){
+        return $query->where('verified', false);
+    }
     public function delete() {
         // TODO утилита удаления не используемых слов
 //        $this->words()->delete();

@@ -11,6 +11,9 @@ class MainController extends Controller {
     public function index(){
         return view('welcome');
     }
+    public function about(){
+        return view('about');
+    }
 
     public function setLanguage($lang = 'en', Request $request){
         if(!in_array($lang, config('app.locales'))) abort(404);

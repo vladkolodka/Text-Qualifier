@@ -32,15 +32,20 @@ function start(){
 
             $upload_controls.fadeOut(200);
 
+            window.setTimeout(function () {
+                $results_controls.fadeIn(200);
+            }, 250);
+
+
             $upload_status.text(locale.uploading);
 
             progress.removeClass('red darken-2 indeterminate');
             progress.addClass('determinate');
 
         },
-        function (progress) {
-            console.log('Progress: ' + progress + '%');
-            progress.width(progress + '%');
+        function (progress_num) {
+            console.log('Progress: ' + progress_num + '%');
+            progress.width(progress_num + '%');
         },
         function () {
             console.log('Uploaded');
@@ -52,6 +57,7 @@ function start(){
         },
         function (respond, textStatus, jqXHR) {
             console.log('Finished');
+            console.log(respond);
             if (typeof respond.error === 'undefined') {
                 progress.removeClass('indeterminate');
                 progress.addClass('determinate');

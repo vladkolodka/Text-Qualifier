@@ -20,8 +20,7 @@ $(function () {
     if(typeof start == 'function') start();
 });
 
-function FileUploader(fileInput, submitButton, onBeforeStart, onProgress,
-                      onUploaded, onFinished, onError, allowed_formats,
+function FileUploader(fileInput, submitButton, onBeforeStart, onProgress, onUploaded, onFinished, onError, allowed_formats,
                       onValidateError, getData, maxSize, headers){
     this.allowed_formats = allowed_formats;
     this.url = fileInput.data('url');
@@ -39,7 +38,7 @@ function FileUploader(fileInput, submitButton, onBeforeStart, onProgress,
         }
 
         // bad file format
-        if (!that.validate(that.file.files[0].name)) {
+        if (that.allowed_formats.length && !that.validate(that.file.files[0].name)) {
             onValidateError(1);
             return false;
         }

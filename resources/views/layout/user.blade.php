@@ -37,7 +37,7 @@
 
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="{{ route('admin::home') }}">{{ trans('main.login') }}</a></li>
-            <li><a href="">{{ trans('main.about') }}</a></li>
+            <li><a href="{{ route('about') }}">{{ trans('main.about') }}</a></li>
             <li><a href="">{{ trans('main.help') }}</a></li>
             <li>
                 <div class="input-field language-selector">

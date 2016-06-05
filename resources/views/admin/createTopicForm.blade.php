@@ -9,6 +9,8 @@
 
     <form action="{{ route('admin::topics.store') }}" method="post">
         {{ csrf_field() }}
+        {{ $errors->first('name') }}
+
         <div class="row">
             <div class="input-field col s12 l8">
                 <input id="name" type="text" class="validate" name="name" required>

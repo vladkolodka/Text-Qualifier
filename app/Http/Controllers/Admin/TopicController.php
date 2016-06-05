@@ -37,15 +37,19 @@ class TopicController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $validator = \Validator::make($request->all(), [
+//        $validator = \Validator::make($request->all(), [
+//            'name' => 'required|min:5|max:255|unique:topics',
+//            'language' => 'required|in:en,ru'
+//        ]);
+//
+//        if($validator->fails()){
+//            $request->session()->flash('result', trans('js.error'));
+//            return redirect()->back();
+//        }
+        $this->validate($request, [
             'name' => 'required|min:5|max:255|unique:topics',
             'language' => 'required|in:en,ru'
         ]);
-
-        if($validator->fails()){
-            $request->session()->flash('result', trans('js.error'));
-            return redirect()->back();
-        }
 
         $topic = Topic::firstOrNew(['name' => $request->input('name')]);
         Language::OfLang($request->input('language'))->topics()->save($topic);
@@ -65,7 +69,7 @@ class TopicController extends Controller {
 //        dd($topic->documents()->paginate(15));
         return view('admin.documents')->with([
             'documents' => $topic->documents()->paginate(15),
-            'page_title' => 'Topic documents'
+            'page_title' => $topic->name
         ]);
     }
 

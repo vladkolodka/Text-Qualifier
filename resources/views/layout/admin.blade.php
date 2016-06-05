@@ -33,7 +33,7 @@
         </a>
 
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="{{ route('home') }}">{{ trans('admin.logout') }}</a></li>
+            <li><a href="{{ route('admin::logout') }}">{{ trans('admin.logout') }}</a></li>
             <li>
                 <div class="input-field language-selector">
                     <select class="icons" id="language" title="Select language" data-src="{{ route('setLang') }}">
@@ -57,7 +57,7 @@
     <div class="col s12 l2">
         <div class="collection">
             <a href="{{ route('admin::topics.index') }}" class="collection-item{{ Request::is('topics') ? ' active' : '' }}">{{ trans('admin.topics') }}</a>
-            <a href="{{ route('admin::documents.index') }}" class="collection-item{{ Request::is('documents]') ? ' active' : '' }}">{{ trans('admin.documents') }}</a>
+            <a href="{{ route('admin::documents.index') }}" class="collection-item{{ Request::is('documents') ? ' active' : '' }}">{{ trans('admin.documents') }}</a>
             <a href="#!" class="collection-item {{ Request::is('utils') ? ' active' : '' }}">{{ trans('admin.utils') }}</a>
         </div>
     </div>
