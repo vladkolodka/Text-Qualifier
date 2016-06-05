@@ -10,7 +10,7 @@ use Qualifier\Http\Models\Document;
 use Qualifier\Http\Models\Word;
 use vladkolodka\linearAlgebra\SingularValueDecomposition;
 
-class TextProcessor{
+class TextProcessor {
     private $text;
     private $text_name;
 
@@ -31,7 +31,7 @@ class TextProcessor{
      * @param string $text_raw
      * @param bool $verified
      */
-    public static function createDocument(array $words, Topic $topic, string $text_name, string $text_raw, bool $verified){
+    public static function createDocument(array $words, Topic $topic, string $text_name, string $text_raw, bool $verified) {
         $document = Document::create(['name' => $text_name, 'text' => $text_raw, 'hash' => md5($text_raw)]);
         $document->verified = $verified;
 
@@ -45,8 +45,12 @@ class TextProcessor{
         $topic->documents()->save($document);
     }
 
-    public function analyze(bool $save = false){
-        if($topic_id = $this->documentExists()) return [Topic::find($topic_id)];
+    public function analyze(bool $save = false) {
+//        if ($topic_id = $this->documentExists()) return [Topic::find($topic_id)];
+
+        $document = $this->documentExists();
+
+        if($document && $document['verified']) return [Topic::find($document['topic_id'])];
 
         $words = (new TextNormalizer($this->text, $this->language))->getWords();
 
@@ -58,20 +62,30 @@ class TextProcessor{
 
         $topics = Topic::find($matrix->getTopicsByDocumentIndex($results));
 
-        if($save) $this->createDocument($words, $topics[0], $this->text_name, $this->text, false);
+        if ($save && !$document) $this->createDocument($words, $topics[0], $this->text_name, $this->text, false);
 
         return $topics;
     }
 
-    public function save($topic_id){
-        if($this->documentExists()) throw new JsonException(trans('admin.text_exists'));
+    public function save($topic_id) {
+        if ($this->documentExists()) throw new JsonException(trans('admin.text_exists'));
         $words = (new TextNormalizer($this->text, $this->language))->getWords();
         $this->createDocument($words, Topic::find($topic_id), $this->text_name, $this->text, true);
     }
 
-    private function documentExists(){
+    private function documentExists() {
         $existing_document = Document::where('hash', md5($this->text))->first();
-        return $existing_document ? $existing_document->topic_id : 0;
+
+
+        if($existing_document){
+            return [
+                'topic_id' => $existing_document->topic_id,
+                'verified' => $existing_document->verified
+            ];
+        }
+
+        return null;
+//        return $existing_document ? $existing_document->topic_id : 0;
     }
 
 }
