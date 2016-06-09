@@ -31,5 +31,4 @@ class MainController extends Controller {
 
         return response()->json(['topics' => $topics]);
     }
-
 }

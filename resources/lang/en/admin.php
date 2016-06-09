@@ -12,6 +12,5 @@ return [
     'create' => 'Create',
     'opened_document' => 'Opened document',
     'topic_created' => 'Topic created',
-    'text_exists' => 'Text already exists',
     'documents_unverified' => 'Unverified documents'
 ];

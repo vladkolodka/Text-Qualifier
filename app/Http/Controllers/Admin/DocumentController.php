@@ -57,7 +57,7 @@ class DocumentController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-//        if(!$request->ajax()) abort(403);
+        if(!$request->ajax()) abort(403);
         
         $qualifier = new TextProcessor($request->file('file'), $request->input('language'));
 

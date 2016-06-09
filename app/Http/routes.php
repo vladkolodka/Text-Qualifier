@@ -12,6 +12,10 @@ Route::group(['domain' => config('app.domain')], function () {
 
     Route::get('language/{lang?}', ['uses' => 'MainController@setLanguage', 'as' => 'setLang'])->where('lang', '[a-z]{2,}');
 
+
+    Route::get('test', function(){
+        return view('test');
+    });
 });
 
 Route::group(['domain' => 'admin.' . config('app.domain'), 'as' => 'admin::'], function () {

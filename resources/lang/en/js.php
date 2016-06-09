@@ -8,5 +8,6 @@ return [
     'upload_done' => 'Done',
     'error' => 'Error',
     'bad_format' => 'Unsupported file format.',
-    'big_file_size' => 'Big file size!'
+    'big_file_size' => 'Big file size!',
+    'words_not_enough' => 'Not enough words'
 ];

@@ -27,7 +27,7 @@ class TextCategorization {
         }
     }
 
-    public function CosineSimilarity(Matrix $data) {
+    private function CosineSimilarity(Matrix $data) {
         $count = $data->getRowDimension();
         $k = ceil($count * 0.2);
 
@@ -38,7 +38,7 @@ class TextCategorization {
 
         for ($i = 0; $i < $k; $i++) {
             for ($j = 0; $j < $count; $j++) {
-                $multiplication[$j] += $data->matrix[$i][$j] * $data->matrix[$i][$count];;
+                $multiplication[$j] += $data->matrix[$i][$j] * $data->matrix[$i][$count];
                 $modA[$j] += pow($data->matrix[$i][$j], 2);
             }
             $modB += pow($data->matrix[$i][$count], 2);

@@ -12,6 +12,5 @@ return [
     'create' => 'Створити',
     'opened_document' => 'Відкритий документ',
     'topic_created' => 'Тема створена',
-    'text_exists' => 'Текст вже існує.',
     'documents_unverified' => 'Не підтверджені документи'
 ];

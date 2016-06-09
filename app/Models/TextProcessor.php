@@ -30,6 +30,7 @@ class TextProcessor {
      * @param string $text_name
      * @param string $text_raw
      * @param bool $verified
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public static function createDocument(array $words, Topic $topic, string $text_name, string $text_raw, bool $verified) {
         $document = Document::create(['name' => $text_name, 'text' => $text_raw, 'hash' => md5($text_raw)]);
@@ -42,7 +43,7 @@ class TextProcessor {
             $document->words()->attach($temp->id, ['tf' => $words[$word]]);
         }
 
-        $topic->documents()->save($document);
+        return $topic->documents()->save($document);
     }
 
     public function analyze(bool $save = false) {
@@ -68,9 +69,9 @@ class TextProcessor {
     }
 
     public function save($topic_id) {
-        if ($this->documentExists()) throw new JsonException(trans('admin.text_exists'));
+        if ($this->documentExists()) throw new JsonException('text_exists');
         $words = (new TextNormalizer($this->text, $this->language))->getWords();
-        $this->createDocument($words, Topic::find($topic_id), $this->text_name, $this->text, true);
+        return $this->createDocument($words, Topic::find($topic_id), $this->text_name, $this->text, true);
     }
 
     private function documentExists() {

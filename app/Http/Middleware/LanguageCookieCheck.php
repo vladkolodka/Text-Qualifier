@@ -5,7 +5,7 @@ namespace Qualifier\Http\Middleware;
 use Closure;
 
 /**
- * Class LanguageCokieCheck
+ * Class LanguageCookieCheck
  * Requires domain value from config/app.php
  *
  * @package DatabaseBrowser\Http\Middleware
